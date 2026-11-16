@@ -17,7 +17,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy:#050d1a;--navy-2:#081428;--navy-3:#0d1f3c;
-  --card:rgba(255,255,255,0.04);
+  --card:rgba(10, 20, 38, 0.6);
   --border:rgba(255,255,255,0.08);
   --gold:#ffb547;--gold-2:#f59e0b;--amber:#ffd166;
   --green:#10b981;--cyan:#38bdf8;
@@ -31,9 +31,60 @@ body{
   overflow-x:hidden;line-height:1.65;
   -webkit-font-smoothing:antialiased;
 }
-h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.2;font-weight:700;letter-spacing:-0.02em}
-a{color:inherit;text-decoration:none}
-img{max-width:100%;display:block}
+
+/* ====== SIDE SOLAR PANELS BACKGROUND ====== */
+.side-panels {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 250px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+  mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  overflow: hidden;
+}
+.side-panels.left { left: 0; }
+.side-panels.right { 
+  right: 0; 
+  transform: scaleX(-1);
+  mask-image: linear-gradient(to right, black 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  transform: perspective(800px) rotateY(25deg) translateY(-50px);
+  width: 300px;
+}
+.panel-cell-side {
+  background: linear-gradient(135deg, rgba(11,34,68,0.9), rgba(6,22,50,0.9));
+  border: 1px solid rgba(56,189,248,0.3);
+  border-radius: 3px;
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+}
+.panel-cell-side::before {
+  content:'';position:absolute;inset:-10%;
+  background:linear-gradient(90deg,transparent 20%,rgba(255,181,71,0.7) 50%,transparent 80%);
+  transform:translateX(-150%) skewX(-15deg);
+  animation:sweep 5s ease-in-out infinite;
+}
+/* Parallax animation for side panels */
+.panel-layer-1 { animation: floatUp 20s linear infinite; }
+.panel-layer-2 { animation: floatDown 25s linear infinite; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+@keyframes floatDown {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
 
 /* ====== SCROLL PROGRESS ====== */
 .scroll-bar{
@@ -41,6 +92,10 @@ img{max-width:100%;display:block}
   background:linear-gradient(90deg,var(--gold),var(--amber),var(--cyan));
   z-index:9999;box-shadow:0 0 12px rgba(255,181,71,.6);
 }
+
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.2;font-weight:700;letter-spacing:-0.02em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
 
 /* ====== NAV ====== */
 .nav{
@@ -56,7 +111,7 @@ img{max-width:100%;display:block}
   border-bottom:1px solid var(--border);
   padding:.7rem 2rem;
 }
-.nav-logo{display:flex;align-items:center;gap:.6rem;font-family:'Space Grotesk';font-weight:700;font-size:1.15rem}
+.nav-logo{display:flex;align-items:center;gap:.6rem;font-family:'Space Grotesk';font-weight:700;font-size:1.15rem;z-index:10;}
 .nav-logo .dot{
   width:12px;height:12px;border-radius:50%;
   background:radial-gradient(circle at 30% 30%,#fff,var(--gold));
@@ -64,7 +119,7 @@ img{max-width:100%;display:block}
   animation:pulse 2s infinite;
 }
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
-.nav-links{display:flex;gap:1.6rem;font-size:.88rem;color:var(--muted)}
+.nav-links{display:flex;gap:1.6rem;font-size:.88rem;color:var(--muted);z-index:10;}
 .nav-links a{position:relative;transition:color .3s}
 .nav-links a:hover{color:var(--gold)}
 .nav-links a::after{
@@ -80,6 +135,7 @@ img{max-width:100%;display:block}
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;padding:6rem 1.5rem 4rem;
   background:radial-gradient(ellipse at 50% 0%,#0d1f3c 0%,#050d1a 60%);
+  z-index: 1;
 }
 .solar-bg{
   position:absolute;inset:0;display:grid;
@@ -186,9 +242,20 @@ img{max-width:100%;display:block}
 .scroll-hint .line{width:1px;height:36px;background:linear-gradient(var(--muted),transparent)}
 @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
-/* ====== SECTIONS ====== */
-section{padding:6rem 1.5rem;position:relative}
-.container{max-width:var(--max);margin:0 auto}
+/* ====== SECTIONS (GLASS EFFECT) ====== */
+section{padding:6rem 1.5rem;position:relative;z-index: 2;}
+.container{
+  max-width:var(--max);margin:0 auto;
+  background: var(--card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+@media(max-width:768px) { .container { padding: 1.5rem; } }
+
 .section-tag{
   display:inline-block;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
   color:var(--gold);margin-bottom:.8rem;font-weight:600;
@@ -326,7 +393,7 @@ section{padding:6rem 1.5rem;position:relative}
 @media(max-width:900px){.org-depts{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.org-depts{grid-template-columns:1fr}}
 .dept-card{
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:16px;
   padding:1.5rem 1rem;text-align:center;transition:all .4s;position:relative;
   overflow: hidden;
 }
@@ -342,7 +409,7 @@ section{padding:6rem 1.5rem;position:relative}
 
 /* ====== TABLES ====== */
 .table-wrap{
-  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  background:rgba(0,0,0,0.2);border:1px solid var(--border);border-radius:18px;
   overflow:hidden;margin-top:1.5rem;
 }
 .table-scroll{overflow-x:auto}
@@ -376,7 +443,7 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .schedule-list{display:grid;gap:.8rem;margin-top:1.5rem}
 .schedule-item{
   display:grid;grid-template-columns:120px 1fr auto;gap:1rem;align-items:center;
-  padding:1rem 1.4rem;background:var(--card);border:1px solid var(--border);
+  padding:1rem 1.4rem;background:rgba(255,255,255,0.02);border:1px solid var(--border);
   border-radius:14px;transition:all .3s;
 }
 .schedule-item:hover{transform:translateX(6px);border-color:rgba(56,189,248,.3)}
@@ -394,8 +461,9 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 /* ====== FOOTER ====== */
 footer{
   padding:4rem 1.5rem 2rem;border-top:1px solid var(--border);
-  background:linear-gradient(180deg,var(--navy),#02060d);
+  background:linear-gradient(180deg,transparent,#02060d);
   text-align:center;
+  position:relative;z-index:2;
 }
 footer .footer-logo{
   font-family:'Space Grotesk';font-size:1.4rem;font-weight:700;margin-bottom:.8rem;
@@ -409,6 +477,7 @@ footer .motto-line{color:var(--gold);letter-spacing:.3em;font-size:.75rem;text-t
 .divider{
   height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);
   margin:0 auto;max-width:var(--max);
+  position:relative;z-index:2;
 }
 
 /* ====== PARALLAX SUN ====== */
@@ -440,6 +509,14 @@ footer .motto-line{color:var(--gold);letter-spacing:.3em;font-size:.75rem;text-t
 
 <div class="scroll-bar" id="scrollBar"></div>
 <div class="parallax-sun" id="parallaxSun"></div>
+
+<!-- SIDE SOLAR PANELS -->
+<div class="side-panels left">
+  <div class="panel-grid panel-layer-1" id="gridLeft1"></div>
+</div>
+<div class="side-panels right">
+  <div class="panel-grid panel-layer-2" id="gridRight2"></div>
+</div>
 
 <!-- ============ NAV ============ -->
 <nav class="nav" id="nav">
@@ -888,6 +965,23 @@ for(let i=0;i<cols*rows;i++){
   solarBg.appendChild(cell);
 }
 
+/* ================= BUILD SIDE SOLAR PANELS ================= */
+function buildSidePanels(containerId, count) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  for(let i=0; i<count; i++){
+    const cell = document.createElement('div');
+    cell.className = 'panel-cell-side';
+    const delay = (Math.random()*5).toFixed(2);
+    const dur = (4 + Math.random()*4).toFixed(2);
+    cell.innerHTML = `<style>.panel-cell-side:nth-child(${i+1})::before{animation-delay:${delay}s;animation-duration:${dur}s}</style>`;
+    container.appendChild(cell);
+  }
+}
+// Render 40 panels untuk setiap belah (kiri & kanan)
+buildSidePanels('gridLeft1', 40);
+buildSidePanels('gridRight2', 40);
+
 /* ================= ENERGY PARTICLES ================= */
 for(let i=0;i<25;i++){
   const p = document.createElement('div');
@@ -955,3 +1049,4 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
+
