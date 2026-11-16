@@ -35,6 +35,59 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.2;font-weight:7
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 
+/* ====== FULLSCREEN OVERLAY (SPLASH SCREEN) ====== */
+#fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #022c22;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#fullscreen-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+#fullscreen-overlay img {
+  height: 120px;
+  margin-bottom: 2rem;
+  mix-blend-mode: multiply;
+  filter: contrast(1.2) brightness(1.1);
+  animation: pulseLogo 2s infinite alternate;
+}
+@keyframes pulseLogo {
+  0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(163, 230, 53, 0.2)); }
+  100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.6)); }
+}
+#fullscreen-overlay h2 {
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+#enter-btn {
+  background: linear-gradient(135deg, var(--leaf-green), var(--lime-green));
+  color: #022c22;
+  padding: 1rem 2.5rem;
+  border-radius: 99px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(163, 230, 53, 0.4);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#enter-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(163, 230, 53, 0.6);
+}
+
 /* ====== SCROLL PROGRESS ====== */
 .scroll-bar{
   position:fixed;top:0;left:0;height:4px;width:0;
@@ -83,7 +136,6 @@ img{max-width:100%;display:block}
 .nav-logo{display:flex;align-items:center;z-index:10;}
 .nav-logo img{
   height: 45px;
-  /* MAGIC CSS UNTUK BUANG BACKGROUND PUTIH */
   mix-blend-mode: multiply;
   filter: contrast(1.2) brightness(1.1);
   transition: transform 0.3s ease;
@@ -106,17 +158,14 @@ img{max-width:100%;display:block}
 }
 .hero-content{position:relative;z-index:2;text-align:center;max-width:900px;display:flex;flex-direction:column;align-items:center;}
 
-/* Logo 3D Animation */
 .hero-logo-container { position: relative; margin-bottom: 2rem; padding: 1rem; perspective: 1000px; }
 .hero-logo-container img {
   height: 140px; width: auto;
-  /* Buang background putih */
   mix-blend-mode: multiply;
   filter: contrast(1.2) brightness(1.1);
   animation: logo3DFloat 6s ease-in-out infinite;
   position: relative; z-index: 2;
 }
-/* Solar Flare di belakang logo */
 .hero-logo-container::before {
   content: ''; position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%); width: 250px; height: 250px;
@@ -189,8 +238,6 @@ section{padding:5rem 1.5rem;position:relative;z-index: 2;}
   position: relative; overflow: hidden;
   transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-/* EFEK PASANG SOLAR PANEL BILA SCROLL */
 .container::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
   background: linear-gradient(90deg, transparent, var(--sun-yellow), var(--lime-green), transparent);
@@ -202,7 +249,7 @@ section{padding:5rem 1.5rem;position:relative;z-index: 2;}
   transform: skewX(-20deg); transition: 0.8s ease;
 }
 .container.reveal.visible::before { transform: scaleX(1); }
-.container.reveal.visible::after { left: 150%; } /* Kilauan laser scan */
+.container.reveal.visible::after { left: 150%; }
 
 @media(max-width:768px) { .container { padding: 1.5rem; } }
 
@@ -214,7 +261,6 @@ section{padding:5rem 1.5rem;position:relative;z-index: 2;}
 }
 .section-desc{color:var(--text);opacity:0.8;max-width:680px;margin-bottom:3rem;font-size:1.02rem}
 
-/* Reveal Animations */
 .reveal{opacity:0;transform:translateY(50px) scale(0.95);transition:opacity 0.8s ease,transform 0.8s cubic-bezier(.16,1,.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0) scale(1)}
 .reveal.delay-1{transition-delay:.1s}
@@ -302,9 +348,19 @@ footer .motto-line{color:var(--sun-yellow);letter-spacing:.3em;font-size:.75rem;
 </head>
 <body>
 
+<!-- FULLSCREEN OVERLAY -->
+<div id="fullscreen-overlay">
+  <img src="gongyulogo.png" alt="GongYu Logo" onerror="this.style.display='none'">
+  <h2>Welcome to GongYu Sdn. Bhd.</h2>
+  <button id="enter-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+    ENTER FULLSCREEN
+  </button>
+</div>
+
 <div class="scroll-bar" id="scrollBar"></div>
 
-<!-- GLOBAL FLOATING PARTICLES (Untuk WOW Factor) -->
+<!-- GLOBAL FLOATING PARTICLES -->
 <div class="particles-container" id="particlesContainer"></div>
 
 <!-- ============ NAV ============ -->
@@ -545,6 +601,30 @@ footer .motto-line{color:var(--sun-yellow);letter-spacing:.3em;font-size:.75rem;
 <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
 <script>
+/* ================= FULLSCREEN LOGIC ================= */
+const enterBtn = document.getElementById('enter-btn');
+const overlay = document.getElementById('fullscreen-overlay');
+
+enterBtn.addEventListener('click', () => {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen().then(() => {
+      overlay.classList.add('hidden');
+    }).catch(err => {
+      console.log("Fullscreen error:", err);
+      overlay.classList.add('hidden'); // Tetap hide overlay if fullscreen fails
+    });
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+    overlay.classList.add('hidden');
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+    overlay.classList.add('hidden');
+  } else {
+    overlay.classList.add('hidden'); // If browser doesn't support it
+  }
+});
+
 /* ================= DATA ================= */
 const orgDepts = [
   { name:'Operations', count:8, mgr:'Muhammad Zahin bin Asrol Afendi', img:'ops.jpg', roles:['Production Supervisor (1)','Production Technicians (2)','Machine Operators (2)','Quality Control Inspector (1)','Maintenance Technician (1)','Warehouse Assistant (1)'] },
@@ -747,27 +827,22 @@ bBody.insertAdjacentHTML('beforeend',`<tr class="total-row"><td colspan="2">TOTA
 
 /* ================= GENERATE GLOBAL PARTICLES ================= */
 const particlesContainer = document.getElementById('particlesContainer');
-const particleCount = 40; // Bilangan zarah
+const particleCount = 40;
 
 for (let i = 0; i < particleCount; i++) {
   const particle = document.createElement('div');
   particle.className = 'particle';
   
-  // Saiz rawak (2px hingga 6px)
   const size = Math.random() * 4 + 2;
   particle.style.width = `${size}px`;
   particle.style.height = `${size}px`;
-  
-  // Posisi rawak (Kiri/Kanan)
   particle.style.left = `${Math.random() * 100}%`;
   
-  // Masa dan delay rawak supaya nampak natural
-  const duration = Math.random() * 10 + 10; // 10s - 20s
+  const duration = Math.random() * 10 + 10;
   const delay = Math.random() * 10;
   particle.style.animationDuration = `${duration}s`;
-  particle.style.animationDelay = `-${delay}s`; // Guna negatif supaya ada yang dah separuh jalan
+  particle.style.animationDelay = `-${delay}s`;
 
-  // Warna rawak (Hijau atau Kuning)
   if (Math.random() > 0.5) {
     particle.style.background = 'var(--sun-yellow)';
     particle.style.boxShadow = '0 0 10px var(--sun-yellow), 0 0 20px var(--sun-yellow)';
@@ -833,3 +908,4 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
+
