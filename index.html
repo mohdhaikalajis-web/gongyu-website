@@ -249,31 +249,71 @@ section{padding:6rem 1.5rem;position:relative}
 }
 .org-ceo small{display:block;font-size:.78rem;font-weight:400;opacity:.8;margin-top:.2rem}
 
-/* CSS untuk Gambar Profile */
+/* CSS untuk Gambar Profile (Diperbesar & Animasi) */
 .avatar, .avatar-dept {
-  width: 75px;
-  height: 75px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--gold);
-  box-shadow: 0 5px 15px rgba(255, 181, 71, 0.3);
-  margin-bottom: 0.8rem;
+  box-shadow: 0 0 20px rgba(255, 181, 71, 0.4);
+  margin-bottom: 1rem;
   display: inline-block;
   background: #0d1f3c;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .avatar-dept {
-  width: 65px;
-  height: 65px;
+  width: 100px;
+  height: 100px;
   border-color: var(--green);
-  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
-  margin-top: 0.5rem;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+  margin-top: 0.8rem;
+}
+
+/* Animasi Wow: Gambar bercahaya & membesar bila hover */
+.dept-card:hover .avatar-dept, .org-ceo:hover .avatar {
+  transform: scale(1.15) translateY(-5px);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+  border-color: #fff;
+}
+
+.org-ceo:hover .avatar {
+  box-shadow: 0 0 40px rgba(255, 181, 71, 0.9);
+}
+
+/* Animasi Wow: Cahaya berdenyut di belakang gambar */
+.dept-card::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, transparent 70%);
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: glowPulse 2s infinite alternate;
+}
+
+.dept-card:hover::after {
+  opacity: 1;
+}
+
+@keyframes glowPulse {
+  0% { transform: translateX(-50%) scale(0.9); opacity: 0.5; }
+  100% { transform: translateX(-50%) scale(1.3); opacity: 0; }
 }
 
 .avatar-fallback {
   color: var(--gold);
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -287,16 +327,17 @@ section{padding:6rem 1.5rem;position:relative}
 @media(max-width:520px){.org-depts{grid-template-columns:1fr}}
 .dept-card{
   background:var(--card);border:1px solid var(--border);border-radius:16px;
-  padding:1.2rem 1rem;text-align:center;transition:all .4s;position:relative;
+  padding:1.5rem 1rem;text-align:center;transition:all .4s;position:relative;
+  overflow: hidden;
 }
 .dept-card:hover{transform:translateY(-6px);border-color:rgba(16,185,129,.4);box-shadow:0 15px 40px rgba(16,185,129,.15)}
-.dept-card .dept-name{font-weight:600;font-size:.92rem;margin-bottom:.3rem;color:var(--text)}
-.dept-card .dept-count{font-size:.75rem;color:var(--green);margin-bottom:.8rem;letter-spacing:.1em;text-transform:uppercase}
-.dept-card .dept-mgr{font-size:.78rem;color:var(--muted);margin-bottom:.8rem;font-style:italic}
+.dept-card .dept-name{font-weight:600;font-size:1.05rem;margin-bottom:.3rem;color:var(--text);position:relative;z-index:2}
+.dept-card .dept-count{font-size:.75rem;color:var(--green);margin-bottom:.8rem;letter-spacing:.1em;text-transform:uppercase;position:relative;z-index:2}
+.dept-card .dept-mgr{font-size:.82rem;color:var(--muted);margin-bottom:.8rem;font-style:italic;position:relative;z-index:2}
 .role-pill{
   display:block;font-size:.74rem;padding:.35rem .6rem;border-radius:8px;
   background:rgba(255,255,255,.04);border:1px solid var(--border);
-  margin-top:.3rem;color:var(--muted);
+  margin-top:.3rem;color:var(--muted);position:relative;z-index:2;
 }
 
 /* ====== TABLES ====== */
@@ -636,8 +677,8 @@ footer .motto-line{color:var(--gold);letter-spacing:.3em;font-size:.75rem;text-t
 const orgDepts = [
   { name:'Operations', count:8, mgr:'Muhammad Zahin bin Asrol Afendi', img:'ops.jpg', roles:['Production Supervisor (1)','Production Technicians (2)','Machine Operators (2)','Quality Control Inspector (1)','Maintenance Technician (1)','Warehouse Assistant (1)'] },
   { name:'Marketing', count:5, mgr:'Muhammad Darwisy Harith Daniel bin Shuaib', img:'mkt.jpg', roles:['Marketing Executive (1)','Digital Marketing Executive (1)','Sales Executive (1)','Customer Relations Executive (1)','Marketing Assistant (1)'] },
-  { name:'Administration', count:4, mgr:'Muhammad Irfan Naufal bin Suhaime', img:'fin.jpg', roles:['Admin Executive (1)','HR Executive (1)','Document Controller (1)','Receptionist (1)'] },
-  { name:'Finance', count:4, mgr:'Muhammad Haikal Mohd Ajis', img:'admin.jpg', roles:['Accounting Executive (1)','Finance Executive (1)','Accounts Payable Clerk (1)','Costing Analyst (1)'] },
+  { name:'Administration', count:4, mgr:'Muhammad Irfan Naufal bin Suhaime', img:'admin.jpg', roles:['Admin Executive (1)','HR Executive (1)','Document Controller (1)','Receptionist (1)'] },
+  { name:'Finance', count:4, mgr:'Muhammad Haikal Mohd Ajis', img:'fin.jpg', roles:['Accounting Executive (1)','Finance Executive (1)','Accounts Payable Clerk (1)','Costing Analyst (1)'] },
   { name:'Support & Technical', count:4, mgr:'Department team', img:'', roles:['IT Support Technician (1)','Technical Support Executive (1)','Procurement Executive (1)','HSE Officer (1)'] }
 ];
 
@@ -687,8 +728,8 @@ const employees = [
   ['Muhammad Hafiq bin Nordin','Chief Executive Officer','Management',8000],
   ['Muhammad Zahin bin Asrol Afendi','Operations Manager','Management',5500],
   ['Muhammad Darwisy Harith Daniel bin Shuaib','Marketing Manager','Management',4800],
-  ['Muhammad Haikal Mohd Ajis','Admin Manager','Management',4500],
-  ['Muhammad Irfan Naufal bin Suhaime','Finance Manager','Management',4800],
+  ['Muhammad Haikal Mohd Ajis','Finance Manager','Management',4500],
+  ['Muhammad Irfan Naufal bin Suhaime','Admin Manager','Management',4800],
   ['Ahmad Izzat bin Rahman','Production Supervisor','Operations',3200],
   ['Lin Wei Sheng','Production Technician','Operations',2600],
   ['Siti Nur Aisyah binti Hassan','Production Technician','Operations',2600],
@@ -914,4 +955,3 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
-
