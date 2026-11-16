@@ -35,7 +35,7 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.2;font-weight:7
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 
-/* ====== FULLSCREEN OVERLAY (SPLASH SCREEN) ====== */
+/* ====== FULLSCREEN OVERLAY (CLICK ANYWHERE) ====== */
 #fullscreen-overlay {
   position: fixed;
   inset: 0;
@@ -45,6 +45,7 @@ img{max-width:100%;display:block}
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer; /* Tukar cursor jadi tangan */
   transition: opacity 0.8s ease, visibility 0.8s ease;
 }
 #fullscreen-overlay.hidden {
@@ -52,7 +53,7 @@ img{max-width:100%;display:block}
   visibility: hidden;
 }
 #fullscreen-overlay img {
-  height: 120px;
+  height: 150px;
   margin-bottom: 2rem;
   mix-blend-mode: multiply;
   filter: contrast(1.2) brightness(1.1);
@@ -64,28 +65,20 @@ img{max-width:100%;display:block}
 }
 #fullscreen-overlay h2 {
   color: var(--text);
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
   text-align: center;
 }
-#enter-btn {
-  background: linear-gradient(135deg, var(--leaf-green), var(--lime-green));
-  color: #022c22;
-  padding: 1rem 2.5rem;
-  border-radius: 99px;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(163, 230, 53, 0.4);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+#fullscreen-overlay p {
+  color: var(--lime-green);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: blink 1.5s infinite;
 }
-#enter-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 15px 40px rgba(163, 230, 53, 0.6);
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
 }
 
 /* ====== SCROLL PROGRESS ====== */
@@ -348,14 +341,11 @@ footer .motto-line{color:var(--sun-yellow);letter-spacing:.3em;font-size:.75rem;
 </head>
 <body>
 
-<!-- FULLSCREEN OVERLAY -->
+<!-- FULLSCREEN OVERLAY (KLIK MANA-MANA UNTUK MASUK) -->
 <div id="fullscreen-overlay">
   <img src="gongyulogo.png" alt="GongYu Logo" onerror="this.style.display='none'">
   <h2>Welcome to GongYu Sdn. Bhd.</h2>
-  <button id="enter-btn">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-    ENTER FULLSCREEN
-  </button>
+  <p>( Click Anywhere to Enter )</p>
 </div>
 
 <div class="scroll-bar" id="scrollBar"></div>
@@ -601,18 +591,17 @@ footer .motto-line{color:var(--sun-yellow);letter-spacing:.3em;font-size:.75rem;
 <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
 <script>
-/* ================= FULLSCREEN LOGIC ================= */
-const enterBtn = document.getElementById('enter-btn');
+/* ================= FULLSCREEN LOGIC (KLIK MANA-MANA) ================= */
 const overlay = document.getElementById('fullscreen-overlay');
 
-enterBtn.addEventListener('click', () => {
+overlay.addEventListener('click', () => {
   const elem = document.documentElement;
   if (elem.requestFullscreen) {
     elem.requestFullscreen().then(() => {
       overlay.classList.add('hidden');
     }).catch(err => {
       console.log("Fullscreen error:", err);
-      overlay.classList.add('hidden'); // Tetap hide overlay if fullscreen fails
+      overlay.classList.add('hidden'); // Tetap hide overlay kalau fail (cth: iPad)
     });
   } else if (elem.webkitRequestFullscreen) { /* Safari */
     elem.webkitRequestFullscreen();
@@ -621,7 +610,7 @@ enterBtn.addEventListener('click', () => {
     elem.msRequestFullscreen();
     overlay.classList.add('hidden');
   } else {
-    overlay.classList.add('hidden'); // If browser doesn't support it
+    overlay.classList.add('hidden');
   }
 });
 
