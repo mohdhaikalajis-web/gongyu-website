@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://USERNAME.github.io/gongyu-website/sitemap.xmlSitemap: https://ahmadali97.github.io/gongyu-website/sitemap.xml
-Sitemap: https://ahmadali97.github.io/gongyu-website/sitemap.xml
+Sitemap: https://mohdhaikalajis-web.github.io/gongyu-website/sitemap.xml
 
