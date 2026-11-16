@@ -245,8 +245,42 @@ section{padding:6rem 1.5rem;position:relative}
   padding:1.2rem 2.2rem;border-radius:16px;text-align:center;
   background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#0a1a2f;
   box-shadow:0 20px 50px rgba(255,181,71,.35);font-weight:600;
+  display:flex;flex-direction:column;align-items:center;
 }
 .org-ceo small{display:block;font-size:.78rem;font-weight:400;opacity:.8;margin-top:.2rem}
+
+/* CSS untuk Gambar Profile */
+.avatar, .avatar-dept {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--gold);
+  box-shadow: 0 5px 15px rgba(255, 181, 71, 0.3);
+  margin-bottom: 0.8rem;
+  display: inline-block;
+  background: #0d1f3c;
+}
+
+.avatar-dept {
+  width: 65px;
+  height: 65px;
+  border-color: var(--green);
+  box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2);
+  margin-top: 0.5rem;
+}
+
+.avatar-fallback {
+  color: var(--gold);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
 .org-line{width:2px;height:36px;background:linear-gradient(var(--gold),transparent)}
 .org-depts{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;width:100%}
 @media(max-width:900px){.org-depts{grid-template-columns:repeat(2,1fr)}}
@@ -448,8 +482,9 @@ footer .motto-line{color:var(--gold);letter-spacing:.3em;font-size:.75rem;text-t
 
     <div class="org-chart">
       <div class="org-ceo reveal">
-        Chief Executive Officer
-        <small>Muhammad Haliq bin Nordin · 1</small>
+        <img src="ceo.jpg" class="avatar" onerror="this.outerHTML='<div class=\'avatar avatar-fallback\'>C</div>'">
+        <div style="margin-top: 10px;">Chief Executive Officer</div>
+        <small>Muhammad Hafiq bin Nordin · 1</small>
       </div>
       <div class="org-line reveal"></div>
       <div class="org-depts" id="orgDepts"></div>
@@ -599,11 +634,11 @@ footer .motto-line{color:var(--gold);letter-spacing:.3em;font-size:.75rem;text-t
 <script>
 /* ================= DATA ================= */
 const orgDepts = [
-  { name:'Operations', count:8, mgr:'Muhammad Zahin bin Asrol Fendi', roles:['Production Supervisor (1)','Production Technicians (2)','Machine Operators (2)','Quality Control Inspector (1)','Maintenance Technician (1)','Warehouse Assistant (1)'] },
-  { name:'Marketing', count:5, mgr:'Muhammad Darwisy Harith Daniel', roles:['Marketing Executive (1)','Digital Marketing Executive (1)','Sales Executive (1)','Customer Relations Executive (1)','Marketing Assistant (1)'] },
-  { name:'Administration', count:4, mgr:'Muhammad Haikal Mohd Aji', roles:['Admin Executive (1)','HR Executive (1)','Document Controller (1)','Receptionist (1)'] },
-  { name:'Finance', count:4, mgr:'Muhammad Irfan Naufal bin Suhaime', roles:['Accounting Executive (1)','Finance Executive (1)','Accounts Payable Clerk (1)','Costing Analyst (1)'] },
-  { name:'Support & Technical', count:4, mgr:'Department team', roles:['IT Support Technician (1)','Technical Support Executive (1)','Procurement Executive (1)','HSE Officer (1)'] }
+  { name:'Operations', count:8, mgr:'Muhammad Zahin bin Asrol Afendi', img:'ops.jpg', roles:['Production Supervisor (1)','Production Technicians (2)','Machine Operators (2)','Quality Control Inspector (1)','Maintenance Technician (1)','Warehouse Assistant (1)'] },
+  { name:'Marketing', count:5, mgr:'Muhammad Darwisy Harith Daniel bin Shuaib', img:'mkt.jpg', roles:['Marketing Executive (1)','Digital Marketing Executive (1)','Sales Executive (1)','Customer Relations Executive (1)','Marketing Assistant (1)'] },
+  { name:'Administration', count:4, mgr:'Muhammad Haikal Mohd Ajis', img:'admin.jpg', roles:['Admin Executive (1)','HR Executive (1)','Document Controller (1)','Receptionist (1)'] },
+  { name:'Finance', count:4, mgr:'Muhammad Irfan Naufal bin Suhaime', img:'fin.jpg', roles:['Accounting Executive (1)','Finance Executive (1)','Accounts Payable Clerk (1)','Costing Analyst (1)'] },
+  { name:'Support & Technical', count:4, mgr:'Department team', img:'', roles:['IT Support Technician (1)','Technical Support Executive (1)','Procurement Executive (1)','HSE Officer (1)'] }
 ];
 
 const designations = [
@@ -649,10 +684,10 @@ const schedule = [
 ];
 
 const employees = [
-  ['Muhammad Halig bin Nordin','Chief Executive Officer','Management',8000],
-  ['Muhammad Zahin bin Asrol Fendi','Operations Manager','Management',5500],
-  ['Muhammad Darwisy Harith Daniel bin Suhaib','Marketing Manager','Management',4800],
-  ['Muhammad Haikal Mohd Ajs','Admin Manager','Management',4500],
+  ['Muhammad Hafiq bin Nordin','Chief Executive Officer','Management',8000],
+  ['Muhammad Zahin bin Asrol Afendi','Operations Manager','Management',5500],
+  ['Muhammad Darwisy Harith Daniel bin Shuaib','Marketing Manager','Management',4800],
+  ['Muhammad Haikal Mohd Ajis','Admin Manager','Management',4500],
   ['Muhammad Irfan Naufal bin Suhaime','Finance Manager','Management',4800],
   ['Ahmad Izzat bin Rahman','Production Supervisor','Operations',3200],
   ['Lin Wei Sheng','Production Technician','Operations',2600],
@@ -729,7 +764,16 @@ const orgDeptsEl = document.getElementById('orgDepts');
 orgDepts.forEach((d,i)=>{
   const el = document.createElement('div');
   el.className = 'dept-card reveal delay-'+(Math.min(i+1,4));
+  
+  let avatarHTML = '';
+  if (d.img) {
+    avatarHTML = `<img src="${d.img}" class="avatar-dept" onerror="this.outerHTML='<div class=\\'avatar-dept avatar-fallback\\'>${d.name.charAt(0)}</div>'">`;
+  } else {
+    avatarHTML = `<div class="avatar-dept avatar-fallback">${d.name.charAt(0)}</div>`;
+  }
+
   el.innerHTML = `
+    ${avatarHTML}
     <div class="dept-name">${d.name}</div>
     <div class="dept-count">${d.count} employees</div>
     <div class="dept-mgr">${d.mgr}</div>
