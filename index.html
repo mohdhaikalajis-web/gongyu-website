@@ -7,7 +7,6 @@
 <meta name="theme-color" content="#050505" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Font Serif Premium & Sans-Serif -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -59,7 +58,7 @@ body{
 .nav-links a:hover::after{width:100%;}
 @media(max-width:900px){.nav-links{display:none}; .nav{padding:1rem 1.5rem}}
 
-/* ====== HERO SECTION (FIXED OVERLAP) ====== */
+/* ====== HERO SECTION ====== */
 .hero{
   position:relative; min-height:100vh; display:flex; flex-direction:column;
   align-items:center; justify-content:center; text-align:center;
@@ -67,8 +66,6 @@ body{
   background: radial-gradient(circle at 50% 30%, #0a1f14 0%, #050505 70%);
 }
 .hero-content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; width: 100%; max-width: 1200px; }
-
-/* Teks Gaya Rayzon */
 .hero-text-top {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 5vw, 4rem);
@@ -83,8 +80,6 @@ body{
 .hero-text-top span {
   font-family: var(--font-sans); font-weight: 300; color: var(--muted); font-size: 0.7em;
 }
-
-/* Logo Box (Tengah, Tak Bertindih) */
 .hero-logo-box {
   background: #fff; padding: 12px 25px; border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 50px rgba(163, 230, 53, 0.3);
@@ -98,124 +93,98 @@ body{
 }
 .hero-logo-box img { height: 70px; }
 
-/* ====== PANEL SOLAR 3D (DI BAWAH LOGO) ====== */
 .solar-panel-wrapper {
-  width: 100%; max-width: 800px;
-  height: 300px;
+  width: 100%; max-width: 800px; height: 300px;
   perspective: 1200px; display: flex; justify-content: center; align-items: center;
   margin-top: 1rem; position: relative; z-index: 1;
 }
-@media(max-width:768px) { .solar-panel-wrapper { height: 200px; } }
-
 .solar-panel-3d {
-  width: 100%; height: 100%;
-  background: #050505;
-  border: 3px solid #222;
-  border-radius: 8px;
-  position: relative;
+  width: 100%; height: 100%; background: #050505;
+  border: 3px solid #222; border-radius: 8px; position: relative;
   transform: rotateX(45deg) rotateZ(-25deg) translateY(30px);
   transform-style: preserve-3d;
   box-shadow: 0 40px 80px rgba(0,0,0,0.9), inset 0 0 50px rgba(0,0,0,1);
   transition: transform 0.5s ease-out;
-}
-@media(max-width:768px) {
-  .solar-panel-3d { transform: rotateX(40deg) rotateZ(-15deg) translateY(20px); }
 }
 .solar-grid {
   position: absolute; inset: 8px;
   display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(6, 1fr); gap: 4px;
   overflow: hidden; border-radius: 4px;
 }
-.cell {
-  background: #0a0a0a; border: 1px solid #1a1a1a;
-  position: relative; overflow: hidden;
-}
-
-/* ====== EFEK CAHAYA SOLAR BERGERAK (SWEEP) ====== */
+.cell { background: #0a0a0a; border: 1px solid #1a1a1a; position: relative; overflow: hidden; }
 .solar-panel-3d::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(
-    115deg,
-    transparent 20%,
-    rgba(163, 230, 53, 0.2) 40%,
-    rgba(251, 191, 36, 0.4) 50%,
-    rgba(163, 230, 53, 0.2) 60%,
-    transparent 80%
-  );
-  transform: translateX(-150%) skewX(-20deg);
-  animation: solarSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  z-index: 2; pointer-events: none;
-  mix-blend-mode: screen;
+  background: linear-gradient(115deg, transparent 20%, rgba(163, 230, 53, 0.2) 40%, rgba(251, 191, 36, 0.4) 50%, rgba(163, 230, 53, 0.2) 60%, transparent 80%);
+  transform: translateX(-150%) skewX(-20deg); animation: solarSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite; z-index: 2; pointer-events: none; mix-blend-mode: screen;
 }
 @keyframes solarSweep {
   0% { transform: translateX(-150%) skewX(-20deg); }
   50%, 100% { transform: translateX(150%) skewX(-20deg); }
 }
+@media(max-width:768px) { 
+  .hero-text-top { font-size: 1.8rem; } .hero-logo-box img { height: 50px; } .solar-panel-wrapper { height: 150px; } 
+  .solar-panel-3d { transform: rotateX(40deg) rotateZ(-15deg) translateY(20px); }
+}
 
-/* ====== SECTIONS & SCROLL ANIMATIONS ====== */
+/* ====== SECTIONS ====== */
 section { padding: 6rem 2rem; position: relative; z-index: 2; background: var(--bg); }
 .container { max-width: 1200px; margin: 0 auto; }
 .section-tag { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-green); font-weight: 600; margin-bottom: 1rem; display: block; }
 .section-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; margin-bottom: 1.5rem; color: #fff; }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(80px) scale(0.95);
-  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
+.reveal { opacity: 0; transform: translateY(80px) scale(0.95); transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+.delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; }
 
 /* ====== CARDS & GRIDS ====== */
 .zenin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-.zenin-card {
-  background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem;
-  transition: all 0.4s ease; backdrop-filter: blur(10px);
-}
+.zenin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; transition: all 0.4s ease; backdrop-filter: blur(10px); }
 .zenin-card:hover { border-color: var(--accent-green); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1); }
 .zenin-card h3 { font-size: 1.3rem; margin-bottom: 1rem; color: #fff; font-family: var(--font-serif); }
 .zenin-card p { color: var(--muted); font-size: 0.95rem; }
 
-/* ====== MOTTO 3 LANGKAH GRAFIK ====== */
-.motto-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem;
-}
-.motto-card {
-  text-align: center; padding: 2.5rem 1.5rem;
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 20px; position: relative; overflow: hidden;
-  transition: all 0.4s ease;
-}
+/* ====== MOTTO 3 LANGKAH ====== */
+.motto-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+.motto-card { text-align: center; padding: 2.5rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; position: relative; overflow: hidden; transition: all 0.4s ease; }
 .motto-card:hover { border-color: var(--accent-gold); transform: translateY(-8px); box-shadow: 0 15px 40px rgba(251, 191, 36, 0.1); }
-.motto-card .step-num {
-  font-family: var(--font-serif); font-size: 3rem; font-weight: 700;
-  color: rgba(255,255,255,0.05); position: absolute; top: 10px; right: 20px;
-}
+.motto-card .step-num { font-family: var(--font-serif); font-size: 3rem; font-weight: 700; color: rgba(255,255,255,0.05); position: absolute; top: 10px; right: 20px; }
 .motto-card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
 .motto-card h4 { font-size: 1.5rem; color: var(--accent-lime); font-family: var(--font-serif); margin-bottom: 0.5rem; }
 .motto-card p { font-size: 0.9rem; color: var(--muted); }
 @media(max-width:768px) { .motto-grid { grid-template-columns: 1fr; } }
 
-/* ====== GOOGLE MAPS IFRAME ====== */
-.map-wrapper {
-  margin-top: 3rem; border-radius: 20px; overflow: hidden;
-  border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  position: relative;
-}
-.map-wrapper iframe {
-  width: 100%; height: 400px; border: 0; display: block;
-  filter: grayscale(100%) invert(90%) contrast(80%);
-  transition: filter 0.5s ease;
-}
+/* ====== GOOGLE MAPS ====== */
+.map-wrapper { margin-top: 3rem; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative; }
+.map-wrapper iframe { width: 100%; height: 400px; border: 0; display: block; filter: grayscale(100%) invert(90%) contrast(80%); transition: filter 0.5s ease; }
 .map-wrapper:hover iframe { filter: grayscale(0%) invert(0%) contrast(100%); }
 @media(max-width:768px) { .map-wrapper iframe { height: 300px; } }
 
-/* ====== ORG CHART & TEAM CARDS ====== */
+/* ====== FINANCIAL DASHBOARD (ANIMASI DUIT) ====== */
+.finance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+.finance-card {
+  background: linear-gradient(180deg, rgba(20,20,20,0.9) 0%, rgba(5,5,5,1) 100%);
+  border: 1px solid rgba(163, 230, 53, 0.3);
+  border-radius: 20px; padding: 2rem; text-align: center;
+  box-shadow: inset 0 0 20px rgba(163, 230, 53, 0.05), 0 10px 30px rgba(0,0,0,0.5);
+  position: relative; overflow: hidden;
+}
+.finance-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-lime), transparent);
+}
+.finance-card h4 { font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 0.8rem; font-weight: 600;}
+.finance-card .money-counter {
+  font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700;
+  background: linear-gradient(180deg, #fff, #9ca3af);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.finance-card.highlight .money-counter {
+  background: linear-gradient(180deg, var(--accent-gold), var(--accent-green));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: 0 0 20px rgba(251,191,36,0.3);
+}
+
+/* ====== ORG CHART ====== */
 .org-ceo-card { max-width: 350px; margin: 0 auto 3rem; text-align: center; background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%); border: 1px solid var(--accent-green); border-radius: 20px; padding: 2rem; }
 .org-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
 .org-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; text-align: center; transition: all 0.3s; }
@@ -244,12 +213,6 @@ footer .footer-logo-box { background: #fff; padding: 10px 20px; border-radius: 8
 footer .footer-logo-box img { height: 40px; }
 footer p { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
 footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 2rem 0; }
-
-@media(max-width:768px) {
-  .hero-text-top { font-size: 1.8rem; }
-  .hero-logo-box img { height: 50px; }
-  .solar-panel-wrapper { height: 150px; }
-}
 </style>
 </head>
 <body>
@@ -271,20 +234,16 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
   </div>
 </nav>
 
-<!-- ============ HERO SECTION ============ -->
+<!-- ============ HERO ============ -->
 <header class="hero" id="home">
   <div class="hero-content">
     <h1 class="hero-text-top">
       <span>Design</span> for Performance,<br>
       <span>Engineered</span> for Tomorrow.
     </h1>
-
-    <!-- Logo di Tengah, Tidak Bertindih -->
     <div class="hero-logo-box">
       <img src="gongyulogo.png" alt="GongYu Logo" onerror="this.style.display='none'">
     </div>
-
-    <!-- Panel Solar 3D di Bawah -->
     <div class="solar-panel-wrapper reveal">
       <div class="solar-panel-3d" id="solarPanel">
         <div class="solar-grid" id="solarGrid"></div>
@@ -293,13 +252,12 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
   </div>
 </header>
 
-<!-- ============ ABOUT SECTION (VISION, MISSION, MOTTO, MAP) ============ -->
+<!-- ============ 1. ABOUT ============ -->
 <section id="about">
   <div class="container">
     <span class="section-tag reveal">01 — About Us</span>
     <h2 class="section-title reveal">Clean Energy.<br>Brighter Tomorrow.</h2>
 
-    <!-- Vision & Mission -->
     <div class="zenin-grid">
       <div class="zenin-card reveal delay-1">
         <h3>Our Vision</h3>
@@ -311,7 +269,6 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
       </div>
     </div>
 
-    <!-- MOTTO 3 LANGKAH GRAFIK -->
     <h3 class="reveal" style="margin-top:4rem; margin-bottom:1rem; color: var(--accent-gold); font-family: var(--font-serif);">Our Motto.</h3>
     <div class="motto-grid">
       <div class="motto-card reveal delay-1">
@@ -334,15 +291,13 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
       </div>
     </div>
 
-    <!-- Lokasi & Google Maps -->
     <h3 class="reveal" style="margin-top:4rem; margin-bottom:1rem; color: var(--accent-gold); font-family: var(--font-serif);">Our Location.</h3>
     <div class="zenin-card reveal delay-1" style="padding: 2rem; text-align: center;">
       <p style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem;">📍 Jalan Sungai Chandong 13, Port Klang, 42000 Port Klang, Selangor, Malaysia</p>
       <div class="map-wrapper">
         <iframe 
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.8371947407586!2d101.413376!3d3.004169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSsOob24gU3VuZ2FpIENoYW5kb25nIDEzLCBQb3J0IEtsYW5n!5e0!3m2!1sen!2smy!4v1620000000000!5m2!1sen!2smy" 
-          allowfullscreen="" 
-          loading="lazy">
+          allowfullscreen="" loading="lazy">
         </iframe>
       </div>
     </div>
@@ -355,13 +310,11 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
     <span class="section-tag reveal">02 — Organisation</span>
     <h2 class="section-title reveal">Meet The Team.</h2>
     
-    <!-- CEO -->
     <div class="org-ceo-card reveal">
       <img src="ceo.jpg" class="avatar" onerror="this.style.background='#222'">
       <div class="name" style="font-size: 1.2rem; margin-top: 1rem;">Muhammad Hafiq bin Nordin</div>
       <div class="role" style="color: var(--accent-gold);">Chief Executive Officer</div>
     </div>
-
     <div class="org-grid" id="orgGrid"></div>
   </div>
 </section>
@@ -410,11 +363,27 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
   </div>
 </section>
 
-<!-- ============ 5. PAYROLL ============ -->
+<!-- ============ 5. PAYROLL (WITH BANK ANIMATION) ============ -->
 <section id="payroll">
   <div class="container">
     <span class="section-tag reveal">05 — Remuneration</span>
     <h2 class="section-title reveal">Remuneration Schedule.</h2>
+
+    <!-- DASHBOARD DUIT ANIMASI -->
+    <div class="finance-grid reveal delay-1">
+      <div class="finance-card">
+        <h4>Monthly Payroll</h4>
+        <div class="money-counter" data-target="96200">RM 0.00</div>
+      </div>
+      <div class="finance-card highlight">
+        <h4>Annual Payroll</h4>
+        <div class="money-counter" data-target="1154400">RM 0.00</div>
+      </div>
+      <div class="finance-card">
+        <h4>Total Employees</h4>
+        <div class="money-counter" style="font-size: 2.5rem;">30</div>
+      </div>
+    </div>
     
     <div class="table-wrap reveal delay-1">
       <div class="table-scroll">
@@ -437,12 +406,19 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
   </div>
 </section>
 
-<!-- ============ 6. OFFICE ITEMS ============ -->
+<!-- ============ 6. OFFICE ITEMS (WITH BANK ANIMATION) ============ -->
 <section id="office">
   <div class="container">
     <span class="section-tag reveal">06 — Office</span>
     <h2 class="section-title reveal">Furniture & Fixtures.</h2>
     
+    <div class="finance-grid reveal delay-1">
+      <div class="finance-card highlight" style="grid-column: 1 / -1;">
+        <h4>One-Time Equipment Cost</h4>
+        <div class="money-counter" data-target="42680">RM 0.00</div>
+      </div>
+    </div>
+
     <div class="table-wrap reveal delay-1">
       <div class="table-scroll">
         <table>
@@ -454,12 +430,23 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
   </div>
 </section>
 
-<!-- ============ 7. BUDGET ============ -->
+<!-- ============ 7. BUDGET (WITH BANK ANIMATION) ============ -->
 <section id="budget">
   <div class="container">
     <span class="section-tag reveal">07 — Budget</span>
     <h2 class="section-title reveal">Administrative Budget.</h2>
     
+    <div class="finance-grid reveal delay-1">
+      <div class="finance-card">
+        <h4>Monthly Admin Budget</h4>
+        <div class="money-counter" data-target="24050">RM 0.00</div>
+      </div>
+      <div class="finance-card highlight">
+        <h4>Annual Admin Budget</h4>
+        <div class="money-counter" data-target="288600">RM 0.00</div>
+      </div>
+    </div>
+
     <div class="table-wrap reveal delay-1">
       <div class="table-scroll">
         <table>
@@ -619,53 +606,31 @@ orgDepts.forEach((d, i) => {
   orgGrid.appendChild(el);
 });
 
-/* ================= RENDER: DESIGNATIONS ================= */
+/* ================= RENDER: TABLES ================= */
 const dBody = document.getElementById('designationBody');
-designations.forEach(r => {
-  dBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td></tr>`);
-});
+designations.forEach(r => dBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td></tr>`));
 dBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td>TOTAL</td><td class="num">30</td><td>5 management staff + 25 operational employees</td></tr>`);
 
-/* ================= RENDER: JOB DESC ================= */
 const jBody = document.getElementById('jobDescBody');
-jobDescriptions.forEach(r => {
-  jBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td></tr>`);
-});
+jobDescriptions.forEach(r => jBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td></tr>`));
 
-/* ================= RENDER: SCHEDULE ================= */
 const sBody = document.getElementById('scheduleBody');
-schedule.forEach(r => {
-  sBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`);
-});
+schedule.forEach(r => sBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`));
 
-/* ================= RENDER: EMPLOYEES ================= */
 const eBody = document.getElementById('empBody');
-employees.forEach(r => {
-  eBody.insertAdjacentHTML('beforeend', `
-    <tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td></tr>
-  `);
-});
+employees.forEach(r => eBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td></tr>`));
 eBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td colspan="3">TOTAL — 30 EMPLOYEES</td><td class="num">RM 96,200.00</td></tr>`);
 
-/* ================= RENDER: DEPT SUMMARY ================= */
 const dSumBody = document.getElementById('deptBody');
-deptSummary.forEach(r => {
-  dSumBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td></tr>`);
-});
+deptSummary.forEach(r => dSumBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td></tr>`));
 dSumBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td>TOTAL</td><td class="num">30</td><td class="num">RM 96,200.00</td><td class="num">RM 1,154,400.00</td></tr>`);
 
-/* ================= RENDER: OFFICE ================= */
 const oBody = document.getElementById('officeBody');
-officeItems.forEach(r => {
-  oBody.insertAdjacentHTML('beforeend', `<tr><td class="num">${r[0]}</td><td>${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td class="num">${r[4].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td>${r[5]}</td></tr>`);
-});
+officeItems.forEach(r => oBody.insertAdjacentHTML('beforeend', `<tr><td class="num">${r[0]}</td><td>${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td class="num">${r[4].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td>${r[5]}</td></tr>`));
 oBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td colspan="4">TOTAL</td><td class="num">RM 42,680.00</td><td></td></tr>`);
 
-/* ================= RENDER: BUDGET ================= */
 const bBody = document.getElementById('budgetBody');
-budgetItems.forEach(r => {
-  bBody.insertAdjacentHTML('beforeend', `<tr><td class="num">${r[0]}</td><td>${r[1]}</td><td class="num">${r[2].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td>${r[3]}</td></tr>`);
-});
+budgetItems.forEach(r => bBody.insertAdjacentHTML('beforeend', `<tr><td class="num">${r[0]}</td><td>${r[1]}</td><td class="num">${r[2].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td>${r[3]}</td></tr>`));
 bBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td colspan="2">TOTAL MONTHLY ADMINISTRATIVE BUDGET</td><td class="num">RM 24,050.00</td><td></td></tr>`);
 
 /* ================= GENERATE 3D SOLAR PANEL GRID ================= */
@@ -676,15 +641,50 @@ for(let i = 0; i < 60; i++) {
   solarGrid.appendChild(cell);
 }
 
+/* ================= COUNTER ANIMATION (EFEK DUIT BANK) ================= */
+const counters = document.querySelectorAll('.money-counter[data-target]');
+const speed = 2000; // Masa ambil untuk habis kira (2 saat)
+
+const animateCounter = (counter) => {
+  const target = +counter.getAttribute('data-target');
+  const start = 0;
+  const startTime = performance.now();
+
+  const updateCount = (currentTime) => {
+    const elapsedTime = currentTime - startTime;
+    const progress = Math.min(elapsedTime / speed, 1);
+    
+    // Fungsi Easing (Biar mula laju, lepas tu slow down)
+    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+    const currentVal = start + (target - start) * easeOutQuart;
+
+    counter.innerText = 'RM ' + currentVal.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    if (progress < 1) {
+      requestAnimationFrame(updateCount);
+    } else {
+      counter.innerText = 'RM ' + target.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+  };
+  requestAnimationFrame(updateCount);
+};
+
 /* ================= SCROLL ANIMATIONS ================= */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
+      
+      // Tambah class visible untuk animasi kotak
       entry.target.classList.add('active');
+
+      // Kalau entry tu ada duit, jalankan animasi counter
+      const moneyCounters = entry.target.querySelectorAll('.money-counter[data-target]');
+      moneyCounters.forEach(counter => animateCounter(counter));
+      
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+}, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
@@ -695,11 +695,8 @@ const scrollBar = document.getElementById('scrollBar');
 window.addEventListener('scroll', () => {
   const h = document.documentElement.scrollHeight - window.innerHeight;
   scrollBar.style.width = (window.scrollY / h) * 100 + '%';
-  if (window.scrollY > 50) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
+  if (window.scrollY > 50) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
 });
 
 /* ================= YEAR ================= */
@@ -707,4 +704,3 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
-
