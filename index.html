@@ -8,12 +8,12 @@
 <meta name="theme-color" content="#050505" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Guna Font Serif (Cinzel) untuk nampak Premium, dan Inter untuk teks biasa -->
+<!-- Font Serif untuk Headline Premium, Sans-Serif untuk Teks Biasa -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg: #050505; /* Hitam pekat */
+  --bg: #050505;
   --bg-card: rgba(20, 20, 20, 0.6);
   --border: rgba(255,255,255,0.08);
   --text: #f3f4f6;
@@ -59,23 +59,36 @@ body{
 .nav-links a:hover{color:#fff;}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:#fff;transition:width .3s;}
 .nav-links a:hover::after{width:100%;}
-
 @media(max-width:900px){.nav-links{display:none}; .nav{padding:1rem 1.5rem}}
 
-/* ====== HERO SECTION (MACAM ZENIN) ====== */
+/* ====== HERO SECTION (SAMA MACAM POST RAYZON) ====== */
 .hero{
   position:relative; min-height:100vh; display:flex; flex-direction:column;
   align-items:center; justify-content:center; text-align:center;
   padding:8rem 1.5rem 4rem; overflow:hidden;
   background: radial-gradient(circle at 50% 40%, #0a1f14 0%, #050505 70%);
 }
+
+/* Garis Grid Halus di belakang */
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+  mask-image: radial-gradient(circle at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 70%);
+}
+
 .hero-glow {
   position:absolute; top:30%; left:50%; transform:translate(-50%, -50%);
-  width:60vw; height:60vw; max-width:800px; max-height:800px;
+  width:80vw; height:80vw; max-width:1000px; max-height:1000px;
   background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 60%);
-  filter:blur(60px); z-index:0; pointer-events:none;
+  filter:blur(80px); z-index:0; pointer-events:none;
 }
-.hero-content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; }
+
+.hero-content { position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; width: 100%; max-width: 1200px; }
 
 /* Logo Box Glass */
 .hero-logo-box {
@@ -85,143 +98,111 @@ body{
 }
 .hero-logo-box img { height: 80px; }
 
-/* Tajuk Serif Premium */
-.hero h1 {
+/* Typography Gaya Rayzon */
+.hero-text-top {
   font-family: var(--font-serif);
-  font-size: clamp(3rem, 8vw, 7rem);
-  font-weight: 600; line-height: 1.1;
-  background: linear-gradient(180deg, #ffffff 0%, #888888 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  margin-bottom: 1.5rem; letter-spacing: -0.02em;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.2; margin-bottom: 1rem;
+  color: #fff; text-align: center; z-index: 3;
 }
-.hero p {
-  font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted);
-  max-width: 600px; margin-bottom: 3rem;
+.hero-text-top span {
+  font-family: var(--font-sans); font-weight: 300; color: var(--muted); font-size: 0.7em;
 }
 
-/* Butang Premium */
-.btn-premium {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 1rem 2.5rem; border-radius: 99px;
-  background: #fff; color: #000; font-weight: 600; font-size: 0.95rem;
-  transition: all 0.3s; cursor: pointer; border: none;
+/* ====== 3D SOLAR PANEL VISUAL ====== */
+.solar-panel-3d-wrapper {
+  position: relative; width: 100%; height: 400px; 
+  perspective: 1500px; display: flex; justify-content: center; align-items: center;
+  margin-top: -2rem; z-index: 1;
 }
-.btn-premium:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(255,255,255,0.3); }
-.btn-outline {
-  background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.2);
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 1rem 2.5rem; border-radius: 99px; font-weight: 500; font-size: 0.95rem;
-  transition: all 0.3s; cursor: pointer; margin-left: 1rem;
-}
-.btn-outline:hover { background: rgba(255,255,255,0.05); border-color: #fff; }
+@media(max-width:768px) { .solar-panel-3d-wrapper { height: 250px; } }
 
-/* ====== SCROLL ANIMATIONS (SLIDE UP FROM BOTTOM) ====== */
-.reveal {
-  opacity: 0; transform: translateY(60px);
-  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+.solar-panel-3d {
+  width: 800px; height: 500px;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+  border: 4px solid #333;
+  border-radius: 4px;
+  position: relative;
+  transform: rotateX(35deg) rotateZ(-20deg) translateY(50px) translateZ(-100px);
+  transform-style: preserve-3d;
+  box-shadow: 0 50px 100px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.5);
+  transition: transform 1s ease-out;
 }
+@media(max-width:768px) {
+  .solar-panel-3d { width: 350px; height: 250px; transform: rotateX(30deg) rotateZ(-15deg) translateY(30px) translateZ(-50px); }
+}
+
+/* Grid Solar Cells */
+.solar-grid {
+  position: absolute; inset: 10px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 4px;
+}
+.cell {
+  background: #111; border: 1px solid #222;
+  position: relative; overflow: hidden;
+  transition: all 0.3s;
+}
+/* Efek Kilauan Cahaya (Glare) */
+.cell::after {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: linear-gradient(to bottom right, rgba(255,255,255,0) 40%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 60%);
+  transform: rotate(30deg); opacity: 0; transition: opacity 0.5s;
+}
+.solar-panel-3d:hover .cell::after { opacity: 1; }
+.solar-panel-3d:hover { transform: rotateX(30deg) rotateZ(-15deg) translateY(30px) translateZ(0); }
+
+/* ====== SECTIONS & SCROLL ANIMATIONS ====== */
+section { padding: 6rem 2rem; position: relative; z-index: 2; }
+.container { max-width: 1200px; margin: 0 auto; }
+.section-tag { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-green); font-weight: 600; margin-bottom: 1rem; display: block; }
+.section-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; margin-bottom: 1.5rem; color: #fff; }
+
+.reveal { opacity: 0; transform: translateY(60px); transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
 .reveal.active { opacity: 1; transform: translateY(0); }
 .delay-1 { transition-delay: 0.1s; }
 .delay-2 { transition-delay: 0.2s; }
 .delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
 
-/* ====== SECTIONS ====== */
-section { padding: 8rem 2rem; position: relative; z-index: 2; }
-.container { max-width: 1200px; margin: 0 auto; }
-
-.section-tag {
-  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent-green); font-weight: 600; margin-bottom: 1rem; display: block;
-}
-.section-title {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 600;
-  margin-bottom: 1.5rem; color: #fff;
-}
-
-/* ====== CARDS GRID (GAYA ZENIN ADVANTAGES) ====== */
-.zenin-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem; margin-top: 3rem;
-}
-.zenin-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 24px; padding: 2.5rem;
-  position: relative; overflow: hidden;
-  transition: all 0.4s ease;
-}
-.zenin-card::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-  opacity: 0; transition: opacity 0.4s ease; pointer-events: none;
-}
+/* ====== CARDS & GRIDS ====== */
+.zenin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.zenin-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all 0.4s ease; }
 .zenin-card:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-5px); }
-.zenin-card:hover::before { opacity: 1; }
-.zenin-card h3 { font-size: 1.5rem; font-weight: 500; margin-bottom: 1rem; color: #fff; }
+.zenin-card h3 { font-size: 1.2rem; margin-bottom: 0.8rem; color: #fff; }
 .zenin-card p { color: var(--muted); font-size: 0.95rem; }
 
-/* ====== ORG CHART (PREMIUM CARDS) ====== */
-.org-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem; margin-top: 3rem;
-}
-.org-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 24px; padding: 2rem 1.5rem; text-align: center;
-  transition: all 0.4s ease;
-}
-.org-card:hover { transform: translateY(-5px); border-color: var(--accent-green); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1); }
-.avatar {
-  width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
-  border: 2px solid rgba(255,255,255,0.1); margin: 0 auto 1.2rem;
-  transition: all 0.4s ease; background: #111;
-}
-.org-card:hover .avatar { border-color: var(--accent-lime); transform: scale(1.05); box-shadow: 0 0 20px rgba(163, 230, 53, 0.3); }
-.org-card .name { font-weight: 600; font-size: 1.05rem; color: #fff; margin-bottom: 0.2rem; }
-.org-card .role { font-size: 0.8rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; font-weight: 600;}
-.org-card .dept { font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;}
-.org-card .roles-list { font-size: 0.8rem; color: var(--muted); text-align: left; line-height: 1.8; }
+/* Org Chart & Team Cards */
+.org-ceo-card { max-width: 350px; margin: 0 auto 3rem; text-align: center; background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%); border: 1px solid var(--accent-green); border-radius: 20px; padding: 2rem; }
+.org-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.org-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; text-align: center; }
+.avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); margin: 0 auto 1rem; background: #111; }
+.org-card .name { font-weight: 600; color: #fff; margin-bottom: 0.2rem; }
+.org-card .role { font-size: 0.8rem; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+.org-card .dept { font-size: 0.85rem; color: var(--muted); }
 
-/* CEO Card Special */
-.ceo-card {
-  max-width: 400px; margin: 0 auto 3rem; text-align: center;
-  background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%);
-  border: 1px solid var(--accent-green); border-radius: 24px; padding: 2.5rem;
-}
-.ceo-card .avatar { width: 120px; height: 120px; border-color: var(--accent-gold); }
-
-/* ====== TABLES (DARK THEME) ====== */
-.table-wrap {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 20px; overflow: hidden; margin-top: 2rem;
-}
+/* Tables Gaya Dark */
+.table-wrap { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 1.5rem; }
 .table-scroll { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
 thead { background: rgba(255,255,255,0.02); }
-th { padding: 1.2rem; text-align: left; font-weight: 500; color: #fff; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-td { padding: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--muted); }
+th { padding: 1rem; text-align: left; color: #fff; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--muted); }
 tbody tr:hover { background: rgba(255,255,255,0.02); }
 .total-row td { background: rgba(255,255,255,0.05); color: #fff; font-weight: 600; border-top: 1px solid var(--border); }
 td.num, th.num { text-align: right; }
 
-/* ====== FOOTER ====== */
-footer {
-  border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; text-align: center;
-  background: #020202;
-}
+/* Footer */
+footer { border-top: 1px solid var(--border); padding: 4rem 2rem 2rem; text-align: center; background: #020202; }
 footer .footer-logo-box { background: #fff; padding: 10px 20px; border-radius: 8px; display: inline-block; margin-bottom: 1.5rem; }
 footer .footer-logo-box img { height: 40px; }
 footer p { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
 footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; margin: 2rem 0; }
 
-/* Responsive */
 @media(max-width:768px) {
-  .hero h1 { font-size: 3rem; }
+  .hero-text-top { font-size: 2rem; }
   .hero-logo-box img { height: 50px; }
-  .nav { padding: 1rem; }
-  .hero-cta { display: flex; flex-direction: column; gap: 1rem; width: 100%; padding: 0 2rem; }
-  .btn-outline { margin-left: 0; }
 }
 </style>
 </head>
@@ -238,35 +219,45 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
     <a href="#about">About</a>
     <a href="#org">Organisation</a>
     <a href="#jobs">Jobs</a>
+    <a href="#schedule">Schedule</a>
     <a href="#payroll">Payroll</a>
+    <a href="#budget">Budget</a>
   </div>
 </nav>
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO (RAYZON STYLE) ============ -->
 <header class="hero" id="home">
+  <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
   
-  <div class="hero-content reveal">
-    <!-- Kotak Putih Logo -->
-    <div class="hero-logo-box">
-      <img src="gongyulogo.png" alt="GongYu Logo" onerror="this.style.display='none'">
+  <div class="hero-content">
+    <!-- Teks Atas (Macam Post Rayzon) -->
+    <h1 class="hero-text-top reveal">
+      <span>Design</span> for Performance,<br>
+      <span>Engineered</span> for Tomorrow.
+    </h1>
+
+    <!-- Panel Solar 3D Besar -->
+    <div class="solar-panel-3d-wrapper reveal delay-1">
+      <div class="solar-panel-3d">
+        <div class="solar-grid">
+          <!-- 60 Grid sel solar dijana dengan Javascript -->
+        </div>
+      </div>
     </div>
-    
-    <h1>Clean Energy<br>Amplified.</h1>
-    <p>GongYu Sdn. Bhd. designs, manufactures and supports smart solar panels — engineered in Malaysia for a sustainable tomorrow.</p>
-    
-    <div class="hero-cta">
-      <a href="#about" class="btn-premium">Explore Company</a>
-      <a href="#org" class="btn-outline">View Organisation</a>
+
+    <!-- Logo di Bawah Panel -->
+    <div class="hero-logo-box reveal delay-2">
+      <img src="gongyulogo.png" alt="GongYu Logo" onerror="this.style.display='none'">
     </div>
   </div>
 </header>
 
-<!-- ============ ABOUT ============ -->
+<!-- ============ 1. ABOUT ============ -->
 <section id="about">
   <div class="container">
     <span class="section-tag reveal">01 — About Us</span>
-    <h2 class="section-title reveal">Advantages You Won't<br>Find Elsewhere.</h2>
+    <h2 class="section-title reveal">Clean Energy.<br>Brighter Tomorrow.</h2>
     
     <div class="zenin-grid">
       <div class="zenin-card reveal delay-1">
@@ -285,38 +276,122 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
   </div>
 </section>
 
-<!-- ============ ORGANISATION ============ -->
+<!-- ============ 2. ORGANISATION ============ -->
 <section id="org">
   <div class="container">
     <span class="section-tag reveal">02 — Organisation</span>
     <h2 class="section-title reveal">Meet The Team.</h2>
     
     <!-- CEO -->
-    <div class="ceo-card reveal">
+    <div class="org-ceo-card reveal">
       <img src="ceo.jpg" class="avatar" onerror="this.style.background='#222'">
-      <div class="name" style="font-size: 1.3rem; margin-top: 1rem;">Muhammad Hafiq bin Nordin</div>
-      <div class="role" style="color: var(--accent-gold); font-size: 0.9rem;">Chief Executive Officer</div>
+      <div class="name" style="font-size: 1.2rem; margin-top: 1rem;">Muhammad Hafiq bin Nordin</div>
+      <div class="role" style="color: var(--accent-gold);">Chief Executive Officer</div>
     </div>
 
-    <!-- Managers Grid -->
-    <div class="org-grid" id="orgGrid">
-      <!-- Data dimasukkan melalui Javascript -->
+    <div class="org-grid" id="orgGrid"></div>
+  </div>
+</section>
+
+<!-- ============ 3. JOB DESIGNATIONS ============ -->
+<section id="jobs">
+  <div class="container">
+    <span class="section-tag reveal">03 — Job Design</span>
+    <h2 class="section-title reveal">Designations & Functions.</h2>
+    
+    <div class="table-wrap reveal delay-1">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Job Designation / Department</th><th class="num">Workers</th><th>Main Function</th></tr></thead>
+          <tbody id="designationBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="margin-top:3rem; margin-bottom:1rem; color: var(--accent-gold);">Job Descriptions</h3>
+    <div class="table-wrap reveal delay-1">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Position / Team</th><th class="num">No.</th><th>Job Description</th></tr></thead>
+          <tbody id="jobDescBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ PAYROLL ============ -->
+<!-- ============ 4. SCHEDULE ============ -->
+<section id="schedule">
+  <div class="container">
+    <span class="section-tag reveal">04 — Administration</span>
+    <h2 class="section-title reveal">Task Schedule.</h2>
+    
+    <div class="table-wrap reveal delay-1">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Frequency</th><th>Task</th><th>Person Responsible</th></tr></thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. PAYROLL ============ -->
 <section id="payroll">
   <div class="container">
-    <span class="section-tag reveal">03 — Data</span>
+    <span class="section-tag reveal">05 — Remuneration</span>
     <h2 class="section-title reveal">Remuneration Schedule.</h2>
-    <p class="reveal" style="color: var(--muted); margin-bottom: 2rem;">Monthly basic salary estimates for all 30 employees.</p>
-
+    
     <div class="table-wrap reveal delay-1">
       <div class="table-scroll">
         <table>
           <thead><tr><th>Employee Name</th><th>Position</th><th>Department</th><th class="num">Monthly (RM)</th></tr></thead>
           <tbody id="empBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <h3 class="reveal" style="margin-top:3rem; margin-bottom:1rem; color: var(--accent-gold);">Payroll Summary by Department</h3>
+    <div class="table-wrap reveal delay-1">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Department</th><th class="num">Headcount</th><th class="num">Monthly (RM)</th><th class="num">Annual (RM)</th></tr></thead>
+          <tbody id="deptBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. OFFICE ITEMS ============ -->
+<section id="office">
+  <div class="container">
+    <span class="section-tag reveal">06 — Office</span>
+    <h2 class="section-title reveal">Furniture & Fixtures.</h2>
+    
+    <div class="table-wrap reveal delay-1">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th class="num">No.</th><th>Item</th><th class="num">Qty</th><th class="num">Unit (RM)</th><th class="num">Total (RM)</th><th>Purpose</th></tr></thead>
+          <tbody id="officeBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. BUDGET ============ -->
+<section id="budget">
+  <div class="container">
+    <span class="section-tag reveal">07 — Budget</span>
+    <h2 class="section-title reveal">Administrative Budget.</h2>
+    
+    <div class="table-wrap reveal delay-1">
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th class="num">No.</th><th>Budget Item</th><th class="num">Estimated (RM)</th><th>Basis</th></tr></thead>
+          <tbody id="budgetBody"></tbody>
         </table>
       </div>
     </div>
@@ -336,10 +411,52 @@ footer .motto { color: var(--accent-green); font-size: 0.75rem; letter-spacing: 
 <script>
 /* ================= DATA ================= */
 const orgDepts = [
-  { name:'Muhammad Zahin bin Asrol Afendi', role:'Operations Manager', dept:'Operations', img:'ops.jpg', roles:['Production Supervisor','Production Technicians','Machine Operators','QC Inspector','Maintenance Technician','Warehouse Assistant'] },
-  { name:'Muhammad Darwisy Harith Daniel', role:'Marketing Manager', dept:'Marketing', img:'mkt.jpg', roles:['Marketing Executive','Digital Marketing','Sales Executive','Customer Relations','Marketing Assistant'] },
-  { name:'Muhammad Irfan Naufal', role:'Admin Manager', dept:'Administration', img:'admin.jpg', roles:['Admin Executive','HR Executive','Document Controller','Receptionist'] },
-  { name:'Muhammad Haikal Mohd Ajis', role:'Finance Manager', dept:'Finance', img:'fin.jpg', roles:['Accounting Executive','Finance Executive','Accounts Payable','Costing Analyst'] }
+  { name:'Muhammad Zahin bin Asrol Afendi', role:'Operations Manager', dept:'Operations', img:'ops.jpg' },
+  { name:'Muhammad Darwisy Harith Daniel', role:'Marketing Manager', dept:'Marketing', img:'mkt.jpg' },
+  { name:'Muhammad Irfan Naufal', role:'Admin Manager', dept:'Administration', img:'admin.jpg' },
+  { name:'Muhammad Haikal Mohd Ajis', role:'Finance Manager', dept:'Finance', img:'fin.jpg' }
+];
+
+const designations = [
+  ['Chief Executive Officer',1,'Overall leadership and company direction'],
+  ['Operations Manager',1,'Production and operational activities'],
+  ['Marketing Manager',1,'Marketing, sales and customer relations'],
+  ['Admin Manager',1,'Human resources and office administration'],
+  ['Finance Manager',1,'Accounting, budgeting and financial control'],
+  ['Operations Department',8,'Production, quality, maintenance and warehouse'],
+  ['Marketing Department',5,'Marketing, sales and customer relations'],
+  ['Administration Department',4,'Administration, HR, documents and reception'],
+  ['Finance Department',4,'Accounts, payments and costing'],
+  ['Support & Technical Department',4,'IT, technical support, procurement and HSE']
+];
+
+const jobDescriptions = [
+  ['Chief Executive Officer',1,'Lead the company, set business direction, approve major plans and monitor overall performance.'],
+  ['Operations Manager',1,'Plan production, manage inventory and quality, supervise workers and ensure safe operations.'],
+  ['Marketing Manager',1,'Prepare marketing plans, manage promotions, develop sales opportunities and maintain customer relationships.'],
+  ['Admin Manager',1,'Manage recruitment, staff records, attendance, office administration and general administrative matters.'],
+  ['Finance Manager',1,'Prepare budgets, monitor cash flow, manage accounts and prepare financial reports.'],
+  ['Production Supervisor',1,'Allocate daily production tasks, monitor output and report production issues.'],
+  ['Production Technicians',2,'Operate and monitor production processes and carry out routine checks.'],
+  ['Machine Operators',2,'Operate manufacturing machines according to work instructions and safety procedures.'],
+  ['Quality Control Inspector',1,'Inspect products, record defects and ensure products meet quality requirements.'],
+  ['Maintenance Technician',1,'Carry out preventive maintenance and basic equipment repairs.'],
+  ['Warehouse Assistant',1,'Receive, label, store and issue materials and finished products.'],
+  ['Marketing Team',5,'Prepare marketing content, handle enquiries, follow up sales leads and support customer relations.'],
+  ['Administration Team',4,'Maintain staff records, manage documents, coordinate office tasks and welcome visitors.'],
+  ['Finance Team',4,'Process invoices, record transactions, assist payments and prepare cost information.'],
+  ['Support & Technical Team',4,'Provide IT and technical support, coordinate purchasing and monitor workplace safety.']
+];
+
+const schedule = [
+  ['Daily','Check emails, answer calls and update staff attendance.','Receptionist / Admin Executive'],
+  ['Daily','File letters, invoices, staff forms and purchase documents.','Document Controller'],
+  ['Weekly','Review attendance and follow up pending HR matters.','HR Executive'],
+  ['Weekly','Check stationery and office supplies; prepare purchase requests.','Admin Executive'],
+  ['Weekly','Arrange meetings and circulate meeting notes.','Admin Manager / Admin Executive'],
+  ['Monthly','Prepare payroll information and submit it to Finance.','HR Executive'],
+  ['Monthly','Review office expenses against the approved budget.','Admin Manager / Finance Manager'],
+  ['Quarterly','Review employee records and office asset register.','Admin Manager / Document Controller']
 ];
 
 const employees = [
@@ -375,6 +492,46 @@ const employees = [
   ['Ramesh a/l Suresh','HSE Officer','Support & Technical',3000]
 ];
 
+const deptSummary = [
+  ['Management',5,27600,331200],
+  ['Operations',8,20900,250800],
+  ['Marketing',5,14000,168000],
+  ['Administration',4,10100,121200],
+  ['Finance',4,11600,139200],
+  ['Support & Technical',4,12000,144000]
+];
+
+const officeItems = [
+  [1,'Office desk',6,450,2700,'Workstations for managers and office staff'],
+  [2,'Ergonomic office chair',10,280,2800,'Seating for management and administrative staff'],
+  [3,'Desktop computer / laptop',8,2500,20000,'Office work, accounts, HR and management'],
+  [4,'Printer / scanner',2,900,1800,'Printing, scanning and document handling'],
+  [5,'Filing cabinet',4,550,2200,'Secure storage of employee and company records'],
+  [6,'Meeting table',1,1200,1200,'Internal meetings and discussions'],
+  [7,'Meeting chairs',8,180,1440,'Meeting room seating'],
+  [8,'Reception counter',1,1000,1000,'Visitor reception'],
+  [9,'Visitor chairs',4,150,600,'Waiting area'],
+  [10,'Air conditioner',3,1800,5400,'Office comfort'],
+  [11,'Wi-Fi router and network switch',2,450,900,'Office internet and network access'],
+  [12,'CCTV set',1,1600,1600,'Office security'],
+  [13,'Fire extinguisher',3,180,540,'Basic fire safety provision'],
+  [14,'Stationery starter set',1,500,500,'Daily administrative work']
+];
+
+const budgetItems = [
+  [1,'Admin Manager + Administration Department payroll',14600,'Monthly'],
+  [2,'Office rental',5000,'Monthly estimate'],
+  [3,'Electricity and water',1000,'Monthly estimate'],
+  [4,'Internet and telephone',300,'Monthly estimate'],
+  [5,'Stationery and printing',450,'Monthly estimate'],
+  [6,'Cleaning services',600,'Monthly estimate'],
+  [7,'Office maintenance',500,'Monthly estimate'],
+  [8,'Software and cloud services',700,'Monthly estimate'],
+  [9,'Postage and courier',150,'Monthly estimate'],
+  [10,'Staff refreshments',250,'Monthly estimate'],
+  [11,'Insurance / safety provision',500,'Monthly estimate']
+];
+
 /* ================= RENDER: ORG ================= */
 const orgGrid = document.getElementById('orgGrid');
 orgDepts.forEach((d, i) => {
@@ -385,32 +542,73 @@ orgDepts.forEach((d, i) => {
     <div class="name">${d.name}</div>
     <div class="role">${d.role}</div>
     <div class="dept">${d.dept} Department</div>
-    <div class="roles-list">
-      ${d.roles.map(r => `• ${r}`).join('<br>')}
-    </div>
   `;
   orgGrid.appendChild(el);
+});
+
+/* ================= RENDER: DESIGNATIONS ================= */
+const dBody = document.getElementById('designationBody');
+designations.forEach(r => {
+  dBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td></tr>`);
+});
+dBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td>TOTAL</td><td class="num">30</td><td>5 management staff + 25 operational employees</td></tr>`);
+
+/* ================= RENDER: JOB DESC ================= */
+const jBody = document.getElementById('jobDescBody');
+jobDescriptions.forEach(r => {
+  jBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td></tr>`);
+});
+
+/* ================= RENDER: SCHEDULE ================= */
+const sBody = document.getElementById('scheduleBody');
+schedule.forEach(r => {
+  sBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`);
 });
 
 /* ================= RENDER: EMPLOYEES ================= */
 const eBody = document.getElementById('empBody');
 employees.forEach(r => {
   eBody.insertAdjacentHTML('beforeend', `
-    <tr>
-      <td>${r[0]}</td>
-      <td>${r[1]}</td>
-      <td>${r[2]}</td>
-      <td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td>
-    </tr>
+    <tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td></tr>
   `);
 });
+eBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td colspan="3">TOTAL — 30 EMPLOYEES</td><td class="num">RM 96,200.00</td></tr>`);
 
-/* ================= SCROLL ANIMATIONS (Intersection Observer) ================= */
+/* ================= RENDER: DEPT SUMMARY ================= */
+const dSumBody = document.getElementById('deptBody');
+deptSummary.forEach(r => {
+  dSumBody.insertAdjacentHTML('beforeend', `<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td></tr>`);
+});
+dSumBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td>TOTAL</td><td class="num">30</td><td class="num">RM 96,200.00</td><td class="num">RM 1,154,400.00</td></tr>`);
+
+/* ================= RENDER: OFFICE ================= */
+const oBody = document.getElementById('officeBody');
+officeItems.forEach(r => {
+  oBody.insertAdjacentHTML('beforeend', `<tr><td class="num">${r[0]}</td><td>${r[1]}</td><td class="num">${r[2]}</td><td class="num">${r[3].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td class="num">${r[4].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td>${r[5]}</td></tr>`);
+});
+oBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td colspan="4">TOTAL</td><td class="num">RM 42,680.00</td><td></td></tr>`);
+
+/* ================= RENDER: BUDGET ================= */
+const bBody = document.getElementById('budgetBody');
+budgetItems.forEach(r => {
+  bBody.insertAdjacentHTML('beforeend', `<tr><td class="num">${r[0]}</td><td>${r[1]}</td><td class="num">${r[2].toLocaleString('en-MY',{minimumFractionDigits:2})}</td><td>${r[3]}</td></tr>`);
+});
+bBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td colspan="2">TOTAL MONTHLY ADMINISTRATIVE BUDGET</td><td class="num">RM 24,050.00</td><td></td></tr>`);
+
+/* ================= GENERATE 3D SOLAR PANEL GRID ================= */
+const solarGrid = document.querySelector('.solar-grid');
+for(let i = 0; i < 60; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  solarGrid.appendChild(cell);
+}
+
+/* ================= SCROLL ANIMATIONS ================= */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('active');
-      observer.unobserve(entry.target); // Main sekali je
+      observer.unobserve(entry.target);
     }
   });
 }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
@@ -424,7 +622,6 @@ const scrollBar = document.getElementById('scrollBar');
 window.addEventListener('scroll', () => {
   const h = document.documentElement.scrollHeight - window.innerHeight;
   scrollBar.style.width = (window.scrollY / h) * 100 + '%';
-  
   if (window.scrollY > 50) {
     nav.classList.add('scrolled');
   } else {
@@ -437,4 +634,3 @@ document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
-
