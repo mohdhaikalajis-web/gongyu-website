@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-solar-edition="valley">
+<html lang="en" data-solar-edition="valley-team">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -715,10 +715,10 @@ const schedule = [
 
 const employees = [
   ['Muhammad Hafiq bin Nordin','Chief Executive Officer','Management',8000],
-  ['Muhammad Zahin bin Asrol Fendi','Operations Manager','Management',5500],
+  ['Muhammad Zahin Bin Asrul Afendi','Operations Manager','Management',5500],
   ['Muhammad Darwisy Harith Daniel bin Suhaib','Marketing Manager','Management',4800],
-  ['Muhammad Haikal Mohd Ajis','Admin Manager','Management',4500],
-  ['Muhammad Irfan Naufal bin Suhaime','Finance Manager','Management',4800],
+  ['Muhammad Irfan Naufal bin Suhaime','Admin Manager','Management',4500],
+  ['Muhammad Haikal Mohd Ajis','Finance Manager','Management',4800],
   ['Ahmad Izzat bin Rahman','Production Supervisor','Operations',3200],
   ['Lim Wei Sheng','Production Technician','Operations',2600],
   ['Siti Nur Aisyah binti Hassan','Production Technician','Operations',2600],
@@ -791,8 +791,8 @@ const budgetItems = [
 const branches = [
   ['Operations','Operations Manager','ops.jpg'],
   ['Marketing','Marketing Manager','mkt.jpg'],
-  ['Administration','Admin Manager','fin.jpg'],
-  ['Finance','Finance Manager','admin.jpg'],
+  ['Administration','Admin Manager','admin.jpg'],
+  ['Finance','Finance Manager','fin.jpg'],
   ['Support & Technical',null,null]
 ];
 const orgGrid = document.getElementById('orgGrid');
@@ -974,7 +974,19 @@ bBody.insertAdjacentHTML('beforeend', `<tr class="total-row"><td colspan="2">TOT
     const index=tops.reduce((last,top,i)=>edge>=top?i:last,-1);
     links.forEach(link=>{
       const current=index>=0 && link.hash==='#'+sections[index].id;
-      if(current && !link.hasAttribute('aria-current'))link.setAttribute('aria-current','location');
+      if(current && !link.hasAttribute('aria-current')){
+        link.setAttribute('aria-current','location');
+        const menu=link.parentElement;
+        if(menu.scrollWidth>menu.clientWidth){
+          const viewport=menu.getBoundingClientRect();
+          const item=link.getBoundingClientRect();
+          const margin=8;
+          const distance=item.left<viewport.left+margin
+            ? item.left-viewport.left-margin
+            : Math.max(0,item.right-viewport.right+margin);
+          if(distance) menu.scrollBy({left:distance,behavior:motion.matches?'auto':'smooth'});
+        }
+      }
       if(!current && link.hasAttribute('aria-current'))link.removeAttribute('aria-current');
     });
     if(motion.matches)return;
